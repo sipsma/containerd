@@ -179,7 +179,7 @@ func populateDefaultUnixSpec(ctx context.Context, s *Spec, id string) error {
 				Destination: "/dev/pts",
 				Type:        "devpts",
 				Source:      "devpts",
-				Options:     []string{"nosuid", "noexec", "newinstance", "ptmxmode=0666", "mode=0620", "gid=5"},
+				Options:     []string{"nosuid", "noexec", "newinstance", "ptmxmode=0666", "mode=0620", "gid=0"},
 			},
 			{
 				Destination: "/dev/shm",
@@ -195,9 +195,9 @@ func populateDefaultUnixSpec(ctx context.Context, s *Spec, id string) error {
 			},
 			{
 				Destination: "/sys",
-				Type:        "sysfs",
-				Source:      "sysfs",
-				Options:     []string{"nosuid", "noexec", "nodev", "ro"},
+				Type:        "none",
+				Source:      "/sys",
+				Options:     []string{"rbind", "nosuid", "noexec", "nodev", "ro"},
 			},
 			{
 				Destination: "/run",
