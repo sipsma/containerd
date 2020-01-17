@@ -59,8 +59,12 @@ func WithTempMount(ctx context.Context, mounts []Mount, f func(root string) erro
 			}
 		}
 	}()
+	mountsContents, err := ioutil.ReadFile("/proc/self/status")
+	if err != nil {
+		return err
+	}
 	if uerr = All(mounts, root); uerr != nil {
-		return errors.Wrapf(uerr, "failed to mount %s", root)
+		return errors.Wrapf(uerr, "failed to mount %+v to %s\n%s", mounts, root, string(mountsContents))
 	}
 	return errors.Wrapf(f(root), "mount callback failed on %s", root)
 }
